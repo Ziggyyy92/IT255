@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Video } from 'src/app/models/video';
 
 @Component({
   selector: 'app-video-box',
@@ -9,9 +10,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class VideoBoxComponent implements OnInit {
 
   @Input() video: any;
+  @Output() videoToDelete: EventEmitter<Video>;
+  @Output() updateVideo: EventEmitter<Video>;
   public link: any;
 
-  constructor(private _sanitizer: DomSanitizer) { }
+  constructor(private _sanitizer: DomSanitizer) {
+    this.videoToDelete = new EventEmitter();
+    this.updateVideo = new EventEmitter();
+   }
 
   ngOnInit(): void {
     this.embedUrl();
@@ -21,4 +27,11 @@ export class VideoBoxComponent implements OnInit {
     this.link = this._sanitizer.bypassSecurityTrustResourceUrl(this.video.link);
   }
 
+  public deleteProduct(): void{
+    this.videoToDelete.emit(this.video);
+  }
+
+  public changeContent(): void{
+    this.updateVideo.emit(this.video);
+  }
 }

@@ -35,4 +35,19 @@ export class AppComponent {
     }
     return result;
   }
+
+  public deleteVideo(video: Video) {
+    this.videos = this.videos.filter(item => {
+      return item.title !== video.title;
+    })
+  }
+
+  public updateVideo(video: Video) {
+    let index = this.videos.findIndex(i => i.title === video.title);
+    this.videos[index].title = this._generateString(6);
+  }
+
+  public addVideo(video: Video) {
+    this.videos.push(video);
+  }
 }
