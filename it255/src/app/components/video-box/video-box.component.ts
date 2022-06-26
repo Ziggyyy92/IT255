@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Video } from 'src/app/models/video';
+import { YoutubeService } from 'src/app/services/youtube.service';
 
 @Component({
   selector: 'app-video-box',
@@ -14,7 +15,7 @@ export class VideoBoxComponent implements OnInit {
   @Output() updateVideo: EventEmitter<Video>;
   public link: any;
 
-  constructor(private _sanitizer: DomSanitizer) {
+  constructor(private _sanitizer: DomSanitizer, private _youtubeService: YoutubeService) {
     this.videoToDelete = new EventEmitter();
     this.updateVideo = new EventEmitter();
    }
@@ -24,7 +25,7 @@ export class VideoBoxComponent implements OnInit {
   }
 
   public embedUrl() {
-    this.link = this._sanitizer.bypassSecurityTrustResourceUrl(this.video.link);
+    this.link = this._sanitizer.bypassSecurityTrustResourceUrl(this._youtubeService.getEmbedLink(this.video.link));
   }
 
   public deleteProduct(): void{
