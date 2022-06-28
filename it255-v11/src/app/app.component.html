@@ -1,0 +1,6 @@
+<div class="row">
+  <app-single-cat class="col-md-4" *ngFor="let cat of cats; index as i;"
+[cat]="cat"></app-single-cat>
+</div>
+
+<router-outlet></router-outlet>
